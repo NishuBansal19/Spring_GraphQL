@@ -525,7 +525,75 @@ Query Variables:
 
 Custom Directives
 
+=========================================
 
+Spring
+1) @Component
+2) @Respository
+3) @Controller
+4) @RestController
+5) @Configuration
+6) @Service
+
+classes with "package com.adobe.demo" and subpackages and having any of above annotations ==> Spring creates instances of those classes
+
+In configaration classes methods with @Bean are treated as factory methods ==> invoked and returned objects from
+these methods are managed by spring container
+
+====================================================
+
+GraphQLError handling
+
+query {
+  bookById(id:9999) {
+    title
+  }
+}
+
+{
+  "errors": [
+    {
+      "message": "Internal Server Error(s) while executing query",
+      "locations": []
+    }
+  ],
+  "data": {
+    "bookById": null
+  }
+}
+
+public class ResourceNotFoundException extends RuntimeException implements GraphQLError {
+
+
+SimpleDataFetcherExceptionHandler
+private String mkMessage(ResultPath path, Throwable exception) {
+        return format("Exception while fetching data (%s) : %s", path, exception.getMessage());
+    }
+
+"message": "Exception while fetching data (/bookById) : Book with 9999 doesn't exist",
+
+public class SimpleGraphQLErrorHandler implements GraphQLErrorHandler {
+
+}
+
+=============
+
+@ControllerAdvice
+class GlobalExceptionHandler {
+
+	@Exception(ResourcenotFoundException.class) 
+	m1() {
+
+	}
+
+	@Exception(ResourcenotFoundException.class) 
+	m1() {
+
+	}
+
+}
+
+==========================
 
 
 

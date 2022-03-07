@@ -1,0 +1,11 @@
+type Mutation {
+ createAuthor(author:AuthorInput): Int
+}
+
+# DTO
+input AuthorInput {
+	firstName:String!,
+	lastName:String,
+	middleName:String
+}
+
