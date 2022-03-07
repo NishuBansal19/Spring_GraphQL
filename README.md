@@ -151,11 +151,69 @@ https://howtodoinjava.com/lombok/lombok-eclipse-installation-examples/
 
 =============
 
-Resume @ 11:20
+GraphQL-kickstart-springboot scans of files with extenstion of ".graphql" or ".graphqls" in classpath and schema is parsed
+
+schema {
+	query: Query
+}
+
+
+type Query {
+	helloWorld:String!
+}
+
+! --> Not Null
 
 
 
 
+http://localhost:8080/voyager
+
+http://localhost:8080/graphiql
+http://localhost:8080/playground
+
+REQUEST:
+query {
+  helloWorld
+}
+
+RESPONSE:
+{
+  "data": {
+    "helloWorld": "Hello World GraphQL!!"
+  }
+}
+
+--
+
+query {
+  greeting(firstName:"Banu", lastName:"Prakash")
+}
+
+{
+  "data": {
+    "greeting": "Hello Banu Prakash"
+  }
+}
+
+========
+schema.graphqls
+
+type Query {
+ 	books: [Book]
+}
+
+# book object type
+type Book {
+	id:Int,
+	title:String!,
+	totalPages:Int,
+	rating:Float,
+	isbn:String
+}
 
 
+Book.java
+BookDao.java
+BookQueryResolver.java [ pending]
 
