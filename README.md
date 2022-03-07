@@ -215,5 +215,58 @@ type Book {
 
 Book.java
 BookDao.java
-BookQueryResolver.java [ pending]
+BookQueryResolver.java  
+
+query {
+  books {
+    title,
+    rating,
+    isbn
+  }
+}
+
+===============
+
+JPA ==> JPASpecification, EntityGraph, @Query
+
+=============================
+Query Arguments:
+
+query {
+  bookById(id:3) {
+    title
+    rating
+  }
+}
+
+====
+
+Using Query Variables:
+
+Query:
+
+query GET_BOOK_BY_ID($bid:Int) {
+  bookById(id:$bid) {
+    title
+    rating
+  }
+}
+
+Query Variable:
+
+{
+  "bid": 2
+}
+
+=================
+
+Unit Testing GraphQL [Resolvers] ==> Mock Services
+
+EasyMock, JMock and Mockito [ spring boot comes builtin]
+
+=======================
+
+
+
+
 

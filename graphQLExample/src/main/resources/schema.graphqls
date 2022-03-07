@@ -2,6 +2,7 @@ type Query {
 	helloWorld:String!
 	greeting(firstName:String!, lastName:String): String!
 	books: [Book]
+	bookById(id:Int):Book
 }
 
 # book object type
