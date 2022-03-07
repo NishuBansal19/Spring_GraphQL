@@ -11,8 +11,8 @@ type Query {
 # book object type
 type Book {
 	id:Int,
-	title:String!,
-	totalPages:Int,
+	title:String! @uppercase,
+	totalPages:Int @deprecated(reason:"prefer using pages"),
 	rating:Float,
 	isbn:String,
 	version:Int,

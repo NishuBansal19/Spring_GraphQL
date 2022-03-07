@@ -448,6 +448,56 @@ query {
 https://github.com/graphql-java/graphql-java-extended-scalars
 
 ===========================================================
+ I parseLiteral(Object input) throws CoercingParseLiteralException;
+
+query {
+	booksByPublishedDate("publishedDate": "2002-10-30") {
+		title
+	}
+}
+
+
+---
+I parseValue(Object input) throws CoercingParseValueException;
+
+
+query {
+	booksByPublishedDate("publishedDate": $pdata) {
+		title
+	}
+}
+
+Query Variable:
+{
+	"pdate": "2002-10-30"
+}
+
+---------------------
+
+POSTMAN as GraphQL Client:
+
+POST http://localhost:8080/graphql
+
+Body ==> GraphQL
+
+Query:
+query GET_BY_ID($bid:Int) {
+    bookById(id:$bid) {
+        title
+    }
+}
+
+GraphQL Variables:
+{
+    "bid": 3
+}
+
+curl --location --request POST 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{"query":"query GET_BY_ID($bid:Int) {\r\n    bookById(id:$bid) {\r\n        title\r\n    }\r\n}","variables":{"bid":3}}'
+
+============================================================
+
 
 
 
