@@ -1,0 +1,4 @@
+type Query {
+	helloWorld:String!
+	greeting(firstName:String!, lastName:String): String!
+}
