@@ -316,6 +316,42 @@ class BookFieldQueryResolver implements GraphQLResolver<Book> {
 }
 
 
+====
+
+Association Mapping between Book and Publisher [ ManyToOne]
+
+
+
+query {
+  books {
+    title 
+    version
+    publisher {
+      id
+      name
+    }
+  }
+}
+
+==============
+
+Publisher has Many books [ OneToMany ]
+
+query {
+  publishers {
+    id
+    name
+    books {
+      title
+      rating
+      publisher {
+        name
+      }
+    }
+  }
+}
+
+==========
 
 
 

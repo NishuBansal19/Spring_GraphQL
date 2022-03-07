@@ -3,6 +3,7 @@ type Query {
 	greeting(firstName:String!, lastName:String): String!
 	books: [Book]
 	bookById(id:Int):Book
+	publishers:[Publisher]
 }
 
 # book object type
@@ -13,13 +14,14 @@ type Book {
 	rating:Float,
 	isbn:String,
 	version:Int,
-	publisher:Publisher
+	publisher:Publisher #ManyToOne
 }
 
 
 type Publisher {
  id:Int,
- name:String
+ name:String,
+ books:[Book] #OneToMany
 }
 
 
