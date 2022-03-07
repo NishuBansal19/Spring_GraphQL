@@ -1,3 +1,5 @@
+scalar Date
+
 type Query {
 	helloWorld:String!
 	greeting(firstName:String!, lastName:String): String!
@@ -14,6 +16,7 @@ type Book {
 	rating:Float,
 	isbn:String,
 	version:Int,
+	publishedDate:Date,
 	publisher:Publisher #ManyToOne
 }
 
