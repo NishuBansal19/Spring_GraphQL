@@ -498,6 +498,35 @@ curl --location --request POST 'http://localhost:8080/graphql' \
 
 ============================================================
 
+* Directives
+
+Built in Directives:
+1) @deprecated
+2) @skip
+3) @include
+4) @specifiedBy
+
+query ($admin: Boolean!) {
+    books {
+      title
+      rating
+      publisher @include(if: $admin) {
+        name
+      }
+    } 
+}
+
+Query Variables:
+{
+  "admin": false
+}
+
+===
+
+Custom Directives
+
+
+
 
 
 
