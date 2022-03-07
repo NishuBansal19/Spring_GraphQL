@@ -260,11 +260,68 @@ Query Variable:
 
 =================
 
+unit testing RESTful Web services ==> we test @RestController ==> Mock Service
+
 Unit Testing GraphQL [Resolvers] ==> Mock Services
 
 EasyMock, JMock and Mockito [ spring boot comes builtin]
 
-=======================
+json-path
+
+====================================
+
+schema files ==> .graphql or .graphqls ==> classpath ==> TypeDefintionRegistry ==. GraphQLSchema
+
+RuntimeWiring ==> QueryResolvers [ implements GraphQLQueryResolver ==> @Component]
+
+--
+
+http://localhost:8080/graphiql
+http://localhost:8080/playground
+http://localhost:8080/voyager
+
+
+==================================
+
+Book might have computed values, or any data which is not a part of database or associated class [Publisher].
+
+
+public class Book {
+	@Id
+	@Column(name="book_id")
+	private int id;
+	private String title;
+	@Column(name="total_pages")
+	private Integer totalPages;
+	private double rating;
+	private String isbn;
+	@Transient
+	private int version;
+}
+
+
+class BookFieldQueryResolver implements GraphQLResolver<Book> {
+
+	public String getTitle() {
+		return "Dummy Book";
+	}
+
+	public double getRating() {
+		return 4.9;
+	}
+
+	public int getVersion() {
+		return 1;
+	}
+}
+
+
+
+
+
+
+
+
 
 
 

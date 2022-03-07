@@ -2,8 +2,12 @@ package com.adobe.demo.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +29,13 @@ public class Book {
 	private Integer totalPages;
 	private double rating;
 	private String isbn;
+	@Transient
+	private int version;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="publisher_id")
+	private Publisher publisher;
+	
+	@Column(name="publisher_id", insertable = false, updatable=false)
+	private Integer publisherId; // book.getPublisherId();
 }
