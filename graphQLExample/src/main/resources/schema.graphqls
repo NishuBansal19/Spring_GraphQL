@@ -1,4 +1,15 @@
 type Query {
 	helloWorld:String!
 	greeting(firstName:String!, lastName:String): String!
+	books: [Book]
 }
+
+# book object type
+type Book {
+	id:Int,
+	title:String!,
+	totalPages:Int,
+	rating:Float,
+	isbn:String
+}
+
