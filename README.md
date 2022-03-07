@@ -595,9 +595,107 @@ class GlobalExceptionHandler {
 
 ==========================
 
+Mutation
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription:Subscription
+}
 
 
+type Mutation {
+ createAutor(firstName:String!, lastName:String, middleName:String): Int
+}
 
+----
+
+type Mutation {
+ createAuthor(author:AuthorInput): Int
+}
+
+# DTO
+input AuthorInput {
+	firstName:String!,
+	lastName:String,
+	middleName:String
+}
+
+
+@Entity
+@Table(name = "authors")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@ToString
+public class Author {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "author_id")
+	private int id;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
+	@Column(name = "middle_name")
+	private String middleName;
+}
+
+public interface AuthorDao extends JpaRepository<Author, Integer> {
+
+}
+
+
+@Component
+public class AuthorMutationResolver implements GraphQLMutationResolver {
+	@Autowired
+	private AuthorDao authorDao;
+	
+	public Integer createAuthor(Author author) {
+		return authorDao.save(author).getId();
+	}
+}
+
+
+============
+
+Validation:
+
+Author:
+	@NotBlank(message = "First Name is required")
+	@Column(name = "first_name")
+	private String firstName;
+
+---
+
+@Component
+@Validated
+public class AuthorMutationResolver implements GraphQLMutationResolver {
+	@Autowired
+	private AuthorDao authorDao;
+	
+	public Integer createAuthor(@Valid Author author) {
+		return authorDao.save(author).getId();
+	}
+}
+
+================
+* GraphQLQueryResolver ==> handling query 
+* GraphQLResolver<T> ==> field resolvers
+* GraphQLMutationResolver
+
+
+Schema ==> Scalar, Object type, custom scalar, directives
+
+=============================
+
+* Async Opertions
+* Pagination --> Relay Specification
+* Security
+
+=================
 
 
 

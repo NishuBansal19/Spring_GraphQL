@@ -4,7 +4,7 @@ type Mutation {
 
 # DTO
 input AuthorInput {
-	firstName:String!,
+	firstName:String,
 	lastName:String,
 	middleName:String
 }
