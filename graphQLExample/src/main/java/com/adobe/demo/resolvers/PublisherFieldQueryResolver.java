@@ -12,11 +12,12 @@ import com.adobe.demo.entity.Publisher;
 import graphql.kickstart.tools.GraphQLResolver;
 
 @Component
-public class PublisherFieldQueryResolver implements GraphQLResolver<Publisher>{
+public class PublisherFieldQueryResolver implements GraphQLResolver<Publisher> {
 	@Autowired
 	private BookDao bookDao;
-	
+
 	public List<Book> getBooks(Publisher publisher) {
 		return bookDao.getBooksByPublisherId(publisher.getId());
 	}
+
 }

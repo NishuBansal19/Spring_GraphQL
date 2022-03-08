@@ -1,5 +1,6 @@
 package com.adobe.demo.cfg;
 
+
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.stereotype.Component;
@@ -10,10 +11,9 @@ import graphql.kickstart.spring.error.ThrowableGraphQLError;
 
 @Component
 public class GlobalExceptionHandler {
-	
-	@ExceptionHandler({GraphQLException.class, ConstraintViolationException.class})
+	@ExceptionHandler({GraphQLException.class,ConstraintViolationException.class} )
 	public ThrowableGraphQLError handle(Exception ex) {
-		System.out.println("---------> " +  ex);
+		System.out.println("------------>");
 		return new ThrowableGraphQLError(ex);
 	}
 }

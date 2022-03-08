@@ -1,0 +1,10 @@
+type Subscription {
+ authors:Author!
+}
+
+type Author {
+	id: Int,
+	firstName: String,
+	lastName: String,
+	middleName :String
+}

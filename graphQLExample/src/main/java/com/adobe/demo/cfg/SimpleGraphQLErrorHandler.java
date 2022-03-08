@@ -9,7 +9,7 @@ import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import graphql.kickstart.execution.error.GraphQLErrorHandler;
 
-@Component
+//@Component
 public class SimpleGraphQLErrorHandler implements GraphQLErrorHandler {
 
 	@Override
@@ -17,7 +17,9 @@ public class SimpleGraphQLErrorHandler implements GraphQLErrorHandler {
 		return errors.stream().map(exp -> {
 			if(exp instanceof ExceptionWhileDataFetching) {
 				ExceptionWhileDataFetching ex  = (ExceptionWhileDataFetching) exp;
-				return (GraphQLError) ex.getException();
+				if(ex instanceof GraphQLError) {
+					return (GraphQLError) ex.getException();
+				}
 			}
 			return exp;
 		}).collect(Collectors.toList());

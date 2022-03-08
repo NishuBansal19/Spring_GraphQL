@@ -697,11 +697,5 @@ Schema ==> Scalar, Object type, custom scalar, directives
 
 =================
 
-
-
-
-
-
-
-
+Day 2
 
