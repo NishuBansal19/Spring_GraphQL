@@ -1,0 +1,28 @@
+type Product {
+ 	id:Int
+ 	name:String
+ 	price:Float
+}
+
+type Tv {
+	id:Int
+ 	name:String
+ 	price:Float
+ 	screenType:String
+ }
+ 
+ type Mobile {
+	id:Int
+ 	name:String
+ 	price:Float
+ 	connectivity:String
+ }
+ 
+ union Products = Product | Tv | Mobile
+ 
+ extend type Query {
+ 	 products: [Products]
+ }
+ 
+ 
+ 
