@@ -7,7 +7,27 @@ type Query {
 	books: [Book]
 	bookById(id:Int):Book
 	publishers:[Publisher]
+	partialBookById(id:Int):Book
+	# using the Type Defintion Factory
+	booksByPage(first:Int, after:String): BookConnection @connection(for:"Book")
 }
+
+#type BookConnection {
+#	edges: [BookEdge]
+#	pageInfo: PageInfo
+#}
+
+#type BookEdge {
+#	cursor:String
+#	node:Book
+#}
+
+#type PageInfo {
+#	hasPreviousPage: Boolean!
+#	hasNextPage: Boolean!
+#}
+
+
 
 # book object type
 type Book {

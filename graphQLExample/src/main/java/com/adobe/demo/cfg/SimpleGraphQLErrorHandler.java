@@ -9,7 +9,7 @@ import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import graphql.kickstart.execution.error.GraphQLErrorHandler;
 
-//@Component
+@Component
 public class SimpleGraphQLErrorHandler implements GraphQLErrorHandler {
 
 	@Override

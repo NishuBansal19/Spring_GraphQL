@@ -805,3 +805,96 @@ query {
     }
   }
 }
+
+===================================================================
+
+Returing Partial Data ==> DataFetcherResult
+
+======================
+
+Pagination
+
+Offset based:
+
+public Page<Book> paginate(int page, int size) {
+	return bookDao.findAll(PageRequest.of(page,size)); // JPA pagination
+}
+
+----------------------------------------
+https://relay.dev/graphql/connections.htm
+
+Relay ==> Facebook ==> Connection for Pagination
+
+{
+  user {
+    id
+    name
+    friends(first: 10, after: "45dvs23vsdf") {
+      edges {
+        cursor
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+}
+
+ 
+
+
+---
+
+ pageInfo {
+        hasNextPage
+        hasPreviousPage
+  }
+
+
+---
+
+ edges {
+        cursor
+        node {
+          id
+          name
+        }
+      }
+
+===========================================
+
+booksByPage(first:Int, after:String): BookConnection
+
+Query:
+
+query {
+  booksByPage(first:10) {
+    edges {
+      cursor
+      node {
+        title
+        rating
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+
+---
+
+booksByPage(first:2, after:"c2ltcGxlLWN1cnNvcjI") {
+
+=================
+
+
+
+
+
