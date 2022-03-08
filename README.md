@@ -894,9 +894,212 @@ booksByPage(first:2, after:"c2ltcGxlLWN1cnNvcjI") {
 
 =============================================================
 
+Union types
 
+type Product {
+ 	id:Int
+ 	name:String
+ 	price:Float
+}
+
+type Tv {
+	id:Int
+ 	name:String
+ 	price:Float
+ 	screenType:String
+ }
+ 
+ type Mobile {
+	id:Int
+ 	name:String
+ 	price:Float
+ 	connectivity:String
+ }
+ 
+ union Products = Product | Tv | Mobile
+ 
+ extend type Query {
+ 	 products: [Products]
+ }
+ 
+ 
+ 
+ 	@Bean
+	public SchemaParserDictionary getSchemaParserDictionary() {
+		return new SchemaParserDictionary().add(Mobile.class).add(Tv.class).add(Product.class);
+	}
+	
+	========
+
+	query {
+	products {
+    __typename
+    ... on Mobile {
+      name
+      price
+      connectivity
+    }
+    ... on Tv {
+      name
+      screenType
+    }
+    
+  }
+}
+
+Response:
+
+{
+  "data": {
+    "products": [
+      {
+        "__typename": "Tv",
+        "name": "Sony Bravia",
+        "screenType": "LED"
+      },
+      {
+        "__typename": "Mobile",
+        "name": "MotoG",
+        "price": 12999,
+        "connectivity": "4G"
+      },
+      {
+        "__typename": "Tv",
+        "name": "Onida Thunder",
+        "screenType": "CRT"
+      },
+      {
+        "__typename": "Mobile",
+        "name": "iPhone XR",
+        "price": 99999,
+        "connectivity": "4G"
+      },
+      {
+        "__typename": "Mobile",
+        "name": "Oppo",
+        "price": 9999,
+        "connectivity": "4G"
+      }
+    ]
+  }
+}
 
  
+=============
+
+type Query {}
+
+type Mutation {}
+
+type Subscription {}
+
+=====================
+
+Observer - Observable Design Pattern
+
+Observable has a subject [ data can from different resources]
+Observable is going to notify all observers ==> Observers can consume the data
+
+Observable
+
+	onNext(data) ==> emit the data
+
+	onComplete() 
+
+	onError()
+
+------------------
+
+StoreInSights
+CustomerInSights
+
+-----------------------
+
+type Subscription {
+ authors:Author!
+}
+
+type Author {
+	id: Int,
+	firstName: String,
+	lastName: String,
+	middleName :String
+}
+
+
+Subscriber gets notification whenever any mutation happens on Author data [update, create]
+
+
+
+@Component
+public class AuthorSubscription implements GraphQLSubscriptionResolver {
+	
+	@Autowired
+	private AuthorPublisher publisher;
+	
+	public Publisher<Author> authors() {
+		return publisher.getPublisher();
+	}
+}
+
+---
+
+
+@Component
+public class AuthorPublisher {
+
+    private final Flowable<Author> publisher;
+
+    private ObservableEmitter<Author> emitter;
+    
+    public AuthorPublisher() {
+        Observable<Author> authorObservable = Observable.create(emitter -> {
+        	System.out.println("Emitter ==> " + emitter);
+            this.emitter = emitter;
+        });
+        publisher = authorObservable.toFlowable(BackpressureStrategy.BUFFER);
+    }
+
+    public void publish(final Author author) {
+        emitter.onNext(author);
+    }
+
+
+    public Flowable<Author> getPublisher() {
+        return publisher;
+    }
+}
+
+
+
+===
+
+http://localhost:8080/graphiql
+client:
+
+subscription {
+  authors {
+    firstName
+    lastName
+  }
+} 
+
+===
+
+Another client
+
+mutation {
+  createAuthor(author: {firstName :"Aaaa", lastName :"44"})
+}
+
+as soon as the mutation happens "1st" client gets notification
+
+====================================================================
+
+Secure GraphQL
+
+
+
 
 
 
