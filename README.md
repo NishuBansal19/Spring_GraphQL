@@ -697,5 +697,111 @@ Schema ==> Scalar, Object type, custom scalar, directives
 
 =================
 
+
+
+Recap:
+1) GraphQL SDL
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
+
+type Query {
+
+}
+
+type Mutation {
+
+}
+
+type Subscription {
+
+}
+
+2) Scalar, CustomScalar --> Coercing interface
+
+3) GraphQLQueryResolver for fields present in type Query
+4) GraphQLResolver<T> for resolving computed field, association of a type ==> Book, Publisher
+5) Directives
+6) GraphQLError
+7) @Validate and @Valid using input validations ==> javax.validation.contraints ==> @NotNull, @Min, @Max
+8) DataFetchingEnvironment
+
+----------------------------
+
 Day 2
 
+* Sync Operations
+
+
+@Component
+public class BookFieldQueryResolver implements GraphQLResolver<Book>{
+	 @Autowired
+	 private PublisherDao publisherDao;
+	 
+	 @Autowired
+	 private AuthorDao authorDao;
+
+	 @Autowired
+	 private SupplierDao supplierDao;
+
+	 public Publisher getPublisher(Book book) {
+		 return publisherDao.findById(book.getPublisherId()).get();
+	 }
+	 
+	  public List<Author> getAuthors(Book book) {
+		 ..
+	 }
+
+	  public Supplier getSupplier(Book book) {
+		 	// ..
+	 }
+}
+
+
+* Async Operations
+
+
+@Component
+public class BookFieldQueryResolver implements GraphQLResolver<Book>{
+	 @Autowired
+	 private PublisherDao publisherDao;
+	 
+	 @Autowired
+	 private AuthorDao authorDao;
+
+	 @Autowired
+	 private SupplierDao supplierDao;
+
+	 public CompletableFuture<Publisher> getPublisher(Book book) {
+		 
+	 }
+	 
+	  public CompletableFuture<List<Author>> getAuthors(Book book) {
+		 ..
+	 }
+
+	  public CompletableFuture<Supplier> getSupplier(Book book) {
+		 	// ..
+	 }
+}
+
+====================
+
+Future is a placeholder for returned Promise
+
+Promise ==> pending, fullfilled / rejected
+
+CompletableFuture ==> Future + CompletionStage \
+
+
+query {
+   books {
+    title 
+    publisher {
+      name
+    }
+  }
+}
